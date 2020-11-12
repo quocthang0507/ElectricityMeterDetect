@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
+using Emgu.CV.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -58,7 +59,7 @@ namespace ElectricityMeterDetect
 		private void tvImages_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			string imagePath = Path.Combine(tbFolderPath.Text, tvImages.SelectedNode.Text);
-			pbPreview.Image = new Bitmap(imagePath);
+			pbPreview.ImageLocation = imagePath;
 		}
 
 		private void btnDetect_Click(object sender, EventArgs e)
@@ -68,7 +69,7 @@ namespace ElectricityMeterDetect
 			int largestRect = -1;
 			btnRead.Enabled = false;
 			imageDetect = new Image<Bgr, Byte>(pbPreview.ImageLocation);
-			imageDetCopy = imageDetCopy.Copy();
+			imageDetCopy = imageDetect.Copy();
 			long detectionTime;
 			tbTime.Text = "";
 			List<Rectangle> meters = new List<Rectangle>();
@@ -104,7 +105,7 @@ namespace ElectricityMeterDetect
 			pbPreview.Update();
 			Image<Bgr, byte> template = new Image<Bgr, byte>("tempimage11.jpg");
 			Image<Bgr, byte> imageToShow = detectedImage.Copy();
-			using (Image<Gray, float> result = detectedImage.MatchTemplate(template, Emgu.CV.CvEnum.TM_TYPE.CV_TM_CCOEFF_NORMED))
+			using (Image<Gray, float> result = detectedImage.MatchTemplate(template, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
 			{
 				double[] minValues, maxValues;
 				Point[] minLocations, maxLocations;

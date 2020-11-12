@@ -15,7 +15,7 @@ namespace ElectricityMeterDetect
 		public OCRReader(string dataPath)
 		{
 			//create OCR engine
-			_ocr = new Tesseract(dataPath, "eng", Tesseract.OcrEngineMode.OEM_TESSERACT_ONLY);
+			_ocr = new Tesseract(dataPath, "eng", OcrEngineMode.Default);
 			_ocr.SetVariable("tessedit_char_whitelist", "1234567890");
 		}
 
@@ -25,7 +25,7 @@ namespace ElectricityMeterDetect
 			using (Image<Gray, byte> tmp1 = gray.Copy())
 			{
 				//Resize. This size of front results in better accuracy from tesseract
-				using (Image<Gray, byte> tmp2 = tmp1.Resize(1000, 800, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC, true))
+				using (Image<Gray, byte> tmp2 = tmp1.Resize(1000, 800, Emgu.CV.CvEnum.Inter.Cubic, true))
 				{
 					//removes some pixels from the edge
 					int edgePixelSize = 2;
@@ -33,13 +33,14 @@ namespace ElectricityMeterDetect
 					Image<Gray, byte> mrdImg = tmp2.Copy();
 					Image<Gray, byte> filteredReading = FilterMeterReading(mrdImg);
 					filteredReadingShow = filteredReading.Copy();
-					Tesseract.Charactor[] words;
+					Tesseract.Character[] words;
 					StringBuilder strBuilder = new StringBuilder();
 
 					using (Image<Gray, byte> tmp = filteredReading.Clone())
 					{
-						_ocr.Recognize(tmp);
-						words = _ocr.GetCharactors();
+						_ocr.SetImage(tmp);
+						_ocr.Recognize();
+						words = _ocr.GetCharacters();
 						for (int i = 0; i < words.Length; i++)
 						{
 							strBuilder.Append(words[i].Text);
