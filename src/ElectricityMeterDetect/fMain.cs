@@ -13,14 +13,13 @@ namespace ElectricityMeterDetect
 	public partial class fMain : Form
 	{
 		private Image<Bgr, byte> imageDetect;
-		private Image<Bgr, Byte> detectedImage;
-		private Image<Bgr, Byte> imageDetCopy;
+		private Image<Bgr, byte> detectedImage;
+		private Image<Bgr, byte> imageDetCopy;
 		private Image<Gray, byte> binarizedReading;
 		private Rectangle detectedRect;
 		private Rectangle meterReadingRect;
 		private static fMain sForm = null;
 		private OCRReader _ocrDetect;
-		private bool gray_in_use = false;
 		private Environment.SpecialFolder root;
 
 		public fMain()
