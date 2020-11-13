@@ -103,7 +103,7 @@ namespace ElectricityMeterDetect
 			detectedImage = imageDetCopy.Copy(detectedRect);
 			pbPreview.Image = detectedImage.ToBitmap();
 			pbPreview.Update();
-			Image<Bgr, byte> template = new Image<Bgr, byte>("tempimage11.jpg");
+			Image<Bgr, byte> template = new Image<Bgr, byte>("template.jpg");
 			Image<Bgr, byte> imageToShow = detectedImage.Copy();
 			using (Image<Gray, float> result = detectedImage.MatchTemplate(template, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
 			{
@@ -113,8 +113,7 @@ namespace ElectricityMeterDetect
 				if (maxValues[0] > 0.5)
 				{
 					Rectangle match = new Rectangle(maxLocations[0], template.Size);
-					Rectangle meterRect = new Rectangle(match.X + match.Width + 9,
-				   match.Y + 7, match.Width * 7, 35);
+					Rectangle meterRect = new Rectangle(match.X + match.Width + 9, match.Y + 7, match.Width * 7, 35);
 					imageToShow.Draw(meterRect, new Bgr(Color.Red), 1);
 					meterReadingRect = meterRect;
 					pbPreview.Image = imageToShow.ToBitmap();
