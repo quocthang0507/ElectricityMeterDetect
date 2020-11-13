@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <opencv_storage>
 	<!-- Automatically converted from trainout\cascade.xml, window size = 48x48 -->
 	<cascade_test type_id="opencv-haar-classifier">
@@ -64,7 +64,6 @@
 							<feature>
 								<rects>
 									<_>
-										77
 										1 0 42 33 -1.
 									</_>
 									<_>
