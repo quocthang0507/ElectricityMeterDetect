@@ -35,6 +35,10 @@ namespace ElectricityMeterDetect
 			this.tvImages = new System.Windows.Forms.TreeView();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.pbPreview = new System.Windows.Forms.PictureBox();
+			this.btnDetect = new System.Windows.Forms.Button();
+			this.btnRead = new System.Windows.Forms.Button();
+			this.tbTime = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
 			this.btnOCR = new System.Windows.Forms.Button();
 			this.tbNumber = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -42,10 +46,6 @@ namespace ElectricityMeterDetect
 			this.tbFolderPath = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dlPictureFolder = new System.Windows.Forms.FolderBrowserDialog();
-			this.label3 = new System.Windows.Forms.Label();
-			this.tbTime = new System.Windows.Forms.TextBox();
-			this.btnRead = new System.Windows.Forms.Button();
-			this.btnDetect = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -145,8 +145,47 @@ namespace ElectricityMeterDetect
 			this.pbPreview.TabIndex = 0;
 			this.pbPreview.TabStop = false;
 			// 
+			// btnDetect
+			// 
+			this.btnDetect.Location = new System.Drawing.Point(274, 43);
+			this.btnDetect.Name = "btnDetect";
+			this.btnDetect.Size = new System.Drawing.Size(86, 25);
+			this.btnDetect.TabIndex = 9;
+			this.btnDetect.Text = "Detect";
+			this.btnDetect.UseVisualStyleBackColor = true;
+			this.btnDetect.Click += new System.EventHandler(this.btnDetect_Click);
+			// 
+			// btnRead
+			// 
+			this.btnRead.Enabled = false;
+			this.btnRead.Location = new System.Drawing.Point(385, 43);
+			this.btnRead.Name = "btnRead";
+			this.btnRead.Size = new System.Drawing.Size(134, 25);
+			this.btnRead.TabIndex = 8;
+			this.btnRead.Text = "Read Number";
+			this.btnRead.UseVisualStyleBackColor = true;
+			this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+			// 
+			// tbTime
+			// 
+			this.tbTime.Location = new System.Drawing.Point(575, 84);
+			this.tbTime.Name = "tbTime";
+			this.tbTime.ReadOnly = true;
+			this.tbTime.Size = new System.Drawing.Size(100, 23);
+			this.tbTime.TabIndex = 7;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(506, 87);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(63, 17);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Elapsed:";
+			// 
 			// btnOCR
 			// 
+			this.btnOCR.Enabled = false;
 			this.btnOCR.Location = new System.Drawing.Point(539, 43);
 			this.btnOCR.Name = "btnOCR";
 			this.btnOCR.Size = new System.Drawing.Size(86, 25);
@@ -204,43 +243,6 @@ namespace ElectricityMeterDetect
 			// 
 			this.dlPictureFolder.Description = "Browse to image folder";
 			this.dlPictureFolder.ShowNewFolderButton = false;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(506, 87);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(63, 17);
-			this.label3.TabIndex = 6;
-			this.label3.Text = "Elapsed:";
-			// 
-			// tbTime
-			// 
-			this.tbTime.Location = new System.Drawing.Point(575, 84);
-			this.tbTime.Name = "tbTime";
-			this.tbTime.ReadOnly = true;
-			this.tbTime.Size = new System.Drawing.Size(100, 23);
-			this.tbTime.TabIndex = 7;
-			// 
-			// btnRead
-			// 
-			this.btnRead.Location = new System.Drawing.Point(385, 43);
-			this.btnRead.Name = "btnRead";
-			this.btnRead.Size = new System.Drawing.Size(134, 25);
-			this.btnRead.TabIndex = 8;
-			this.btnRead.Text = "Read Number";
-			this.btnRead.UseVisualStyleBackColor = true;
-			this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
-			// 
-			// btnDetect
-			// 
-			this.btnDetect.Location = new System.Drawing.Point(274, 43);
-			this.btnDetect.Name = "btnDetect";
-			this.btnDetect.Size = new System.Drawing.Size(86, 25);
-			this.btnDetect.TabIndex = 9;
-			this.btnDetect.Text = "Detect";
-			this.btnDetect.UseVisualStyleBackColor = true;
-			this.btnDetect.Click += new System.EventHandler(this.btnDetect_Click);
 			// 
 			// fMain
 			// 

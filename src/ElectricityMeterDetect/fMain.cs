@@ -60,6 +60,8 @@ namespace ElectricityMeterDetect
 		{
 			string imagePath = Path.Combine(tbFolderPath.Text, tvImages.SelectedNode.Text);
 			pbPreview.ImageLocation = imagePath;
+			btnRead.Enabled = false;
+			btnOCR.Enabled = false;
 		}
 
 		private void btnDetect_Click(object sender, EventArgs e)
@@ -98,8 +100,6 @@ namespace ElectricityMeterDetect
 
 		private void btnRead_Click(object sender, EventArgs e)
 		{
-			pbPreview.Image = imageDetCopy.ToBitmap();
-			pbPreview.Update();
 			detectedImage = imageDetCopy.Copy(detectedRect);
 			pbPreview.Image = detectedImage.ToBitmap();
 			pbPreview.Update();
@@ -118,6 +118,7 @@ namespace ElectricityMeterDetect
 					meterReadingRect = meterRect;
 					pbPreview.Image = imageToShow.ToBitmap();
 					pbPreview.Update();
+					btnOCR.Enabled = true;
 				}
 			}
 		}
