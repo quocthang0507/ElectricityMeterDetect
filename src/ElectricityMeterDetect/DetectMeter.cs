@@ -33,12 +33,7 @@ namespace ElectricityMeterDetect
 					{
 						Debug.Print(ex.Message);
 					}
-					Rectangle[] meterDetected = meter.DetectMultiScale(
-					gray,
-					1.1,
-					3,
-					new Size(48, 48),
-					Size.Empty);
+					Rectangle[] meterDetected = meter.DetectMultiScale(gray, 1.1, 3, new Size(48, 48), Size.Empty);
 					meters.AddRange(meterDetected);
 				}
 				watch.Stop();

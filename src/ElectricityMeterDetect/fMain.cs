@@ -75,7 +75,7 @@ namespace ElectricityMeterDetect
 			long detectionTime;
 			tbTime.Text = "";
 			List<Rectangle> meters = new List<Rectangle>();
-			DetectMeter.Detect(imageDetect, "cascade_test.xml", meters, out detectionTime);
+			DetectMeter.Detect(imageDetect, "cascade.xml", meters, out detectionTime);
 			if (meters.Count > 0)
 			{
 				int[] rectArray = new int[meters.Count];
@@ -103,14 +103,15 @@ namespace ElectricityMeterDetect
 			detectedImage = imageDetCopy.Copy(detectedRect);
 			pbPreview.Image = detectedImage.ToBitmap();
 			pbPreview.Update();
-			Image<Bgr, byte> template = new Image<Bgr, byte>("template.jpg");
+			Image<Bgr, byte> template = new Image<Bgr, byte>("template (2).jpg");
 			Image<Bgr, byte> imageToShow = detectedImage.Copy();
 			using (Image<Gray, float> result = detectedImage.MatchTemplate(template, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
 			{
 				double[] minValues, maxValues;
 				Point[] minLocations, maxLocations;
 				result.MinMax(out minValues, out maxValues, out minLocations, out maxLocations);
-				if (maxValues[0] > 0.5)
+				//if (maxValues[0] > 0.5)
+				if (maxValues[0] > 0.2)
 				{
 					Rectangle match = new Rectangle(maxLocations[0], template.Size);
 					Rectangle meterRect = new Rectangle(match.X + match.Width + 9, match.Y + 7, match.Width * 7, 35);
