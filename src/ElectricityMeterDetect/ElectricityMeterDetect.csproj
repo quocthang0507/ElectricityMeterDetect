@@ -157,7 +157,19 @@
     <Content Include="img\img1 %286%29.jpg" />
     <Content Include="img\img1 %287%29.jpg" />
     <Content Include="img\img1 %288%29.jpg" />
-    <Content Include="template.png" />
+    <Content Include="libs\Emgu.CV.Bitmap.dll" />
+    <Content Include="libs\Emgu.CV.Bitmap.xml" />
+    <Content Include="libs\Emgu.CV.DebuggerVisualizers.dll" />
+    <Content Include="libs\Emgu.CV.Platform.NetCore.dll" />
+    <Content Include="libs\Emgu.CV.Platform.NetCore.xml" />
+    <Content Include="libs\Emgu.CV.Platform.NetFramework.dll" />
+    <Content Include="libs\Emgu.CV.Platform.NetFramework.xml" />
+    <Content Include="libs\Emgu.CV.Platform.NetStandard.dll" />
+    <Content Include="libs\Emgu.CV.Platform.NetStandard.xml" />
+    <Content Include="libs\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="template.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

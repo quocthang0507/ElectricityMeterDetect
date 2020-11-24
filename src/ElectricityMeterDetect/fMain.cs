@@ -1,6 +1,5 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,20 +102,23 @@ namespace ElectricityMeterDetect
 			detectedImage = imageDetCopy.Copy(detectedRect);
 			pbPreview.Image = detectedImage.ToBitmap();
 			pbPreview.Update();
-			Image<Bgr, byte> template = new Image<Bgr, byte>("template (2).jpg");
+			Image<Bgr, byte> template = new Image<Bgr, byte>("template.png");
 			Image<Bgr, byte> imageToShow = detectedImage.Copy();
 			using (Image<Gray, float> result = detectedImage.MatchTemplate(template, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
 			{
 				double[] minValues, maxValues;
 				Point[] minLocations, maxLocations;
 				result.MinMax(out minValues, out maxValues, out minLocations, out maxLocations);
-				//if (maxValues[0] > 0.5)
-				if (maxValues[0] > 0.2)
+				if (maxValues[0] > 0.3)
 				{
 					Rectangle match = new Rectangle(maxLocations[0], template.Size);
-					Rectangle meterRect = new Rectangle(match.X + match.Width + 9, match.Y + 7, match.Width * 7, 35);
+
+					Rectangle meterRect = new Rectangle(match.X + match.Width + 8, match.Y + 6, match.Width * 6, 35);
 					imageToShow.Draw(meterRect, new Bgr(Color.Red), 1);
 					meterReadingRect = meterRect;
+					//imageToShow.Draw(match, new Bgr(Color.Red), 1);
+					//meterReadingRect = match;
+
 					pbPreview.Image = imageToShow.ToBitmap();
 					pbPreview.Update();
 					btnOCR.Enabled = true;
