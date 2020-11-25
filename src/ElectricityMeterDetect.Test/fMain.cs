@@ -12,10 +12,10 @@ namespace ElectricityMeterDetect.Test
 {
 	public partial class fMain : Form
 	{
-		private Image<Bgr, byte> imageDetect;
-		private Image<Bgr, byte> imageDetCopy;
+		private Image<Bgr, byte> image;
+		private Image<Bgr, byte> imageCopy;
+		private Rectangle detection;
 		private Image<Gray, byte> binarizedReading;
-		private Rectangle detectedRect;
 		private static fMain sForm = null;
 		private OCRReader _ocrDetect;
 		private Environment.SpecialFolder root;
@@ -62,10 +62,11 @@ namespace ElectricityMeterDetect.Test
 		private void btnDetect_Click(object sender, EventArgs e)
 		{
 			int largestRect = -1;
-			imageDetect = new Image<Bgr, Byte>(pbPreview.ImageLocation);
+			image = new Image<Bgr, Byte>(pbPreview.ImageLocation);
+			imageCopy = image.Copy();
 			tbTime.Text = "";
 			List<Rectangle> meters = new List<Rectangle>();
-			DetectMeter.Detect(imageDetect, "cascade.xml", meters, out long detectionTime);
+			DetectMeter.Detect(image, "cascade.xml", meters, out long detectionTime);
 			if (meters.Count > 0)
 			{
 				int[] rectArray = new int[meters.Count];
@@ -77,21 +78,25 @@ namespace ElectricityMeterDetect.Test
 				}
 				largestRect = rectArray.ToList().IndexOf(rectArray.Max());
 			}
+			else
+			{
+				MessageBox.Show("Not found");
+				return;
+			}
 			if (largestRect != -1)
 			{
-				imageDetect.Draw(meters[largestRect], new Bgr(Color.Red), 2);
-				detectedRect = meters[largestRect];
+				image.Draw(meters[largestRect], new Bgr(Color.Red), 2);
+				detection = meters[largestRect];
 			}
-			pbPreview.Image = imageDetect.ToBitmap();
+			pbPreview.Image = image.ToBitmap();
 			pbPreview.Update();
 			tbTime.Text = detectionTime.ToString() + "ms";
 		}
 
 		private void btnOCR_Click(object sender, EventArgs e)
 		{
-			Image<Bgr, byte> tmpImage = imageDetCopy.Clone();
-			Image<Bgr, byte> myImage = tmpImage.Copy(detectedRect);
-			ProcessImage(myImage.Convert<Gray, byte>());
+			Image<Bgr, byte> tmpImage = imageCopy.Copy(detection);
+			ProcessImage(tmpImage.Convert<Gray, byte>());
 			pbPreview.Image = binarizedReading.ToBitmap();
 		}
 
@@ -111,14 +116,12 @@ namespace ElectricityMeterDetect.Test
 		private void ProcessImage(Image<Gray, byte> image)
 		{
 			Stopwatch watch = Stopwatch.StartNew(); // time the detection process
-			List<String> metreadings = new List<String>();
-			List<string> words = _ocrDetect.FindMeterReading(image, metreadings, out binarizedReading);
+			List<string> words = _ocrDetect.FindMeterReading(image, out binarizedReading);
 			watch.Stop(); //stop the timer
-			tbTime.Text = String.Format(watch.Elapsed.TotalMilliseconds.ToString()) + "ms";
-			Point startPoint = new Point(10, 10);
+			tbTime.Text = string.Format(watch.Elapsed.TotalMilliseconds.ToString()) + "ms";
 			for (int i = 0; i < words.Count; i++)
 			{
-				Debug.Print(String.Format("Meter Reading: {0}", words[i]));
+				Debug.Print(string.Format("Meter Reading: {0}", words[i]));
 			}
 		}
 		#endregion

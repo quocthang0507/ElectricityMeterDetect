@@ -312,27 +312,27 @@
         </member>
         <member name="T:Emgu.CV.CvString">
             <summary>
-            Wrapper for cv::String. This class support UTF-8 chars.
+            Wrapper for cv::string. This class support UTF-8 chars.
             </summary>
         </member>
-        <member name="M:Emgu.CV.CvString.#ctor(System.String)">
+        <member name="M:Emgu.CV.Cvstring.#ctor(System.String)">
             <summary>
             Create a CvString from System.String
             </summary>
             <param name="s">The System.String object to be converted to CvString</param>
         </member>
-        <member name="M:Emgu.CV.CvString.#ctor">
+        <member name="M:Emgu.CV.Cvstring.#ctor">
             <summary>
             Create an empty CvString
             </summary>
         </member>
-        <member name="M:Emgu.CV.CvString.ToString">
+        <member name="M:Emgu.CV.Cvstring.ToString">
             <summary>
             Get the string representation of the CvString
             </summary>
             <returns>The string representation of the CvString</returns>
         </member>
-        <member name="P:Emgu.CV.CvString.Length">
+        <member name="P:Emgu.CV.Cvstring.Length">
             <summary>
             Gets the length of the string
             </summary>
@@ -340,7 +340,7 @@
             The length of the string
             </value>
         </member>
-        <member name="M:Emgu.CV.CvString.DisposeObject">
+        <member name="M:Emgu.CV.Cvstring.DisposeObject">
             <summary>
             Release all the unmanaged resource associated with this object.
             </summary>
@@ -12349,99 +12349,99 @@
         </member>
         <member name="T:Emgu.CV.Util.VectorOfCvString">
             <summary>
-            Wrapped class of the C++ standard vector of CvString.
+            Wrapped class of the C++ standard vector of Cvstring.
             </summary>
             <summary>
-            Wrapped class of the C++ standard vector of CvString.
+            Wrapped class of the C++ standard vector of Cvstring.
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.#ctor">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.#ctor">
             <summary>
             Create an empty standard vector of CvString
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.#ctor(System.Int32)">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.#ctor(System.Int32)">
             <summary>
             Create an standard vector of CvString of the specific size
             </summary>
             <param name="size">The size of the vector</param>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.#ctor(Emgu.CV.CvString[])">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.#ctor(Emgu.CV.CvString[])">
             <summary>
             Create an standard vector of CvString with the initial values
             </summary>
             <param name="values">The initial values</param>
         </member>
-        <member name="P:Emgu.CV.Util.VectorOfCvString.Size">
+        <member name="P:Emgu.CV.Util.VectorOfCvstring.Size">
             <summary>
             Get the size of the vector
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.Clear">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.Clear">
             <summary>
             Clear the vector
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.Push(Emgu.CV.CvString)">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.Push(Emgu.CV.CvString)">
             <summary>
             Push a value into the standard vector
             </summary>
             <param name="value">The value to be pushed to the vector</param>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.Push(Emgu.CV.CvString[])">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.Push(Emgu.CV.CvString[])">
             <summary>
             Push multiple values into the standard vector
             </summary>
             <param name="values">The values to be pushed to the vector</param>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.Push(Emgu.CV.Util.VectorOfCvString)">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.Push(Emgu.CV.Util.VectorOfCvString)">
             <summary>
             Push multiple values from the other vector into this vector
             </summary>
             <param name="other">The other vector, from which the values will be pushed to the current vector</param>
         </member>
-        <member name="P:Emgu.CV.Util.VectorOfCvString.Item(System.Int32)">
+        <member name="P:Emgu.CV.Util.VectorOfCvstring.Item(System.Int32)">
             <summary>
             Get the item in the specific index
             </summary>
             <param name="index">The index</param>
             <returns>The item in the specific index</returns>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.DisposeObject">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.DisposeObject">
             <summary>
             Release the standard vector
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.GetInputArray">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.GetInputArray">
             <summary>
             Get the pointer to cv::_InputArray
             </summary>
             <returns>The input array</returns>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.GetOutputArray">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.GetOutputArray">
             <summary>
             Get the pointer to cv::_OutputArray
             </summary>
             <returns>The output array</returns>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.GetInputOutputArray">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.GetInputOutputArray">
             <summary>
             Get the pointer to cv::_InputOutputArray
             </summary>
             <returns>The input output array</returns>
         </member>
-        <member name="P:Emgu.CV.Util.VectorOfCvString.SizeOfItemInBytes">
+        <member name="P:Emgu.CV.Util.VectorOfCvstring.SizeOfItemInBytes">
             <summary>
             The size of the item in this Vector, counted as size in bytes.
             </summary>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.ToArray">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.ToArray">
             <summary>
             Convert the standard vector to an array of String
             </summary>
             <returns>An array of String</returns>
         </member>
-        <member name="M:Emgu.CV.Util.VectorOfCvString.#ctor(System.String[])">
+        <member name="M:Emgu.CV.Util.VectorOfCvstring.#ctor(System.String[])">
             <summary>
             Create a VectorOfCvString object from an array of String
             </summary>

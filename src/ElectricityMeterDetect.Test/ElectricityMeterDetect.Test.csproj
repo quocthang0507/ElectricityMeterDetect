@@ -149,9 +149,6 @@
     <Content Include="cascade.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="cascade_test.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="img\img1 %283%29.jpg" />
     <Content Include="img\img1 %284%29.jpg" />
     <Content Include="img\img1 %285%29.jpg" />

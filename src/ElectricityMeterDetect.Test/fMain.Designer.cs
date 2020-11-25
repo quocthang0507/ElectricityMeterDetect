@@ -139,7 +139,6 @@ namespace ElectricityMeterDetect.Test
 			this.pbPreview.Location = new System.Drawing.Point(3, 19);
 			this.pbPreview.Name = "pbPreview";
 			this.pbPreview.Size = new System.Drawing.Size(579, 295);
-			this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pbPreview.TabIndex = 0;
 			this.pbPreview.TabStop = false;
 			// 

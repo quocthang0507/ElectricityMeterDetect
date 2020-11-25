@@ -154,11 +154,11 @@ namespace ElectricityMeterDetect
 			List<String> metreadings = new List<String>();
 			List<string> words = _ocrDetect.FindMeterReading(image, metreadings, out binarizedReading);
 			watch.Stop(); //stop the timer
-			tbTime.Text = String.Format(watch.Elapsed.TotalMilliseconds.ToString()) + "ms";
+			tbTime.Text = string.Format(watch.Elapsed.TotalMilliseconds.ToString()) + "ms";
 			Point startPoint = new Point(10, 10);
 			for (int i = 0; i < words.Count; i++)
 			{
-				Debug.Print(String.Format("Meter Reading: {0}", words[i]));
+				Debug.Print(string.Format("Meter Reading: {0}", words[i]));
 			}
 		}
 		#endregion
