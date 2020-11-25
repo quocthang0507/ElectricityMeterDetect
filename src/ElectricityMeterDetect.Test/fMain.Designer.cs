@@ -45,6 +45,7 @@ namespace ElectricityMeterDetect.Test
 			this.tbFolderPath = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dlPictureFolder = new System.Windows.Forms.FolderBrowserDialog();
+			this.btnSave = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -71,6 +72,7 @@ namespace ElectricityMeterDetect.Test
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.Controls.Add(this.btnSave);
 			this.splitContainer1.Panel2.Controls.Add(this.btnDetect);
 			this.splitContainer1.Panel2.Controls.Add(this.tbTime);
 			this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -139,6 +141,7 @@ namespace ElectricityMeterDetect.Test
 			this.pbPreview.Location = new System.Drawing.Point(3, 19);
 			this.pbPreview.Name = "pbPreview";
 			this.pbPreview.Size = new System.Drawing.Size(579, 295);
+			this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pbPreview.TabIndex = 0;
 			this.pbPreview.TabStop = false;
 			// 
@@ -199,7 +202,7 @@ namespace ElectricityMeterDetect.Test
 			// 
 			// btnOpen
 			// 
-			this.btnOpen.Location = new System.Drawing.Point(689, 14);
+			this.btnOpen.Location = new System.Drawing.Point(673, 13);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(86, 25);
 			this.btnOpen.TabIndex = 2;
@@ -228,6 +231,16 @@ namespace ElectricityMeterDetect.Test
 			// 
 			this.dlPictureFolder.Description = "Browse to image folder";
 			this.dlPictureFolder.ShowNewFolderButton = false;
+			// 
+			// btnSave
+			// 
+			this.btnSave.Location = new System.Drawing.Point(765, 14);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(107, 25);
+			this.btnSave.TabIndex = 10;
+			this.btnSave.Text = "Save image";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// fMain
 			// 
@@ -274,6 +287,7 @@ namespace ElectricityMeterDetect.Test
 		private System.Windows.Forms.TextBox tbTime;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button btnDetect;
+		private System.Windows.Forms.Button btnSave;
 	}
 }
 

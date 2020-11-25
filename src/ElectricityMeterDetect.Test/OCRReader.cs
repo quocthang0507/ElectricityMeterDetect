@@ -22,23 +22,22 @@ namespace ElectricityMeterDetect.Test
 			ocr.SetVariable("tessedit_char_whitelist", "1234567890");
 		}
 
-		public List<string> FindMeterReading(Image<Gray, byte> gray, out Image<Gray, byte> binarizedImage)
+		public List<string> FindMeterReading(Image<Bgr, byte> original, out Image<Bgr, byte> imageDetection)
 		{
 			List<string> strmeterreadings = new List<string>();
-			using (Image<Gray, byte> temp1 = gray.Clone())
+			using (var temp1 = original.Clone())
 			{
 				//Resize. This size of front results in better accuracy from tesseract
-				using (Image<Gray, byte> temp2 = temp1.Resize(1000, 800, Emgu.CV.CvEnum.Inter.Cubic, true))
+				using (var temp2 = temp1.Resize(1000, 800, Inter.Cubic, true))
 				{
 					//removes some pixels from the edge
 					int edgePixelSize = 20;
 					temp2.ROI = new Rectangle(new Point(edgePixelSize, edgePixelSize), temp2.Size - new Size(2 * edgePixelSize, 2 * edgePixelSize));
-					Image<Gray, byte> filteredReading = FilterMeterReading(temp2.Clone());
-					binarizedImage = filteredReading.Clone();
+					Image<Gray, byte> filteredReading = FilterMeterReading(temp2.Clone(), out imageDetection);
 					Tesseract.Character[] words;
 					StringBuilder strBuilder = new StringBuilder();
 
-					using (Image<Gray, byte> temp3 = filteredReading.Clone())
+					using (var temp3 = filteredReading.Clone())
 					{
 						ocr.SetImage(temp3);
 						ocr.Recognize();
@@ -59,22 +58,10 @@ namespace ElectricityMeterDetect.Test
 			ocr.Dispose();
 		}
 
-		private Image<Gray, byte> FilterMeterReading(Image<Gray, byte> image, out Image<Gray, byte> imageDetection)
+		private Image<Gray, byte> FilterMeterReading(Image<Bgr, byte> image, out Image<Bgr, byte> imageDetection)
 		{
-			////smoothed
-			//Image<Gray, byte> smoothedGrayFrame = image.PyrDown();
-			//smoothedGrayFrame = smoothedGrayFrame.PyrUp();
-			////canny
-			//Image<Gray, byte> cannyFrame = smoothedGrayFrame.Canny(50, 50);
-			////smoothing
-			//image = smoothedGrayFrame;
-
-			////binarize
-			//Image<Gray, byte> thresh = image.ThresholdBinaryInv(new Gray(50), new Gray(255));
-			//thresh._Not();
-			//thresh._Or(cannyFrame);
-			//return thresh;
-			var blur = image.SmoothBlur(5, 5);
+			var _image = image.Convert<Gray, byte>();
+			var blur = _image.SmoothBlur(5, 5);
 
 			var thresh = blur.ThresholdBinary(new Gray(100), new Gray(255));
 			thresh._Not();
@@ -84,15 +71,15 @@ namespace ElectricityMeterDetect.Test
 
 			VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
 			Mat hier = new Mat();
-			CvInvoke.FindContours(morph, contours, hier, RetrType.External, ChainApproxMethod.ChainApproxNone);
+			CvInvoke.FindContours(morph, contours, hier, RetrType.Ccomp, ChainApproxMethod.ChainApproxNone);
 			Dictionary<int, double> dict = new Dictionary<int, double>();
 			if (contours.Size > 0)
 			{
 				for (int i = 0; i < contours.Size; i++)
 				{
-					double aera = CvInvoke.ContourArea(contours[i]);
-					Rectangle rect = CvInvoke.BoundingRectangle(contours[i]);
-					dict.Add(i, aera);
+					double area = CvInvoke.ContourArea(contours[i]);
+					if (area > 200 && area < 2000)
+						dict.Add(i, area);
 				}
 			}
 			imageDetection = image.Clone();
@@ -101,7 +88,7 @@ namespace ElectricityMeterDetect.Test
 			{
 				int key = int.Parse(item.Key.ToString());
 				Rectangle rect = CvInvoke.BoundingRectangle(contours[key]);
-				CvInvoke.Rectangle(imageDetection, rect, new MCvScalar(255, 0, 0), 8);
+				CvInvoke.Rectangle(imageDetection, rect, new MCvScalar(255, 0, 0), 2);
 			}
 			return morph;
 		}

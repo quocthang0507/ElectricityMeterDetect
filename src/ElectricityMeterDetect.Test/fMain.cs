@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,7 +16,6 @@ namespace ElectricityMeterDetect.Test
 		private Image<Bgr, byte> image;
 		private Image<Bgr, byte> imageCopy;
 		private Rectangle detection;
-		private Image<Gray, byte> binarizedReading;
 		private static fMain sForm = null;
 		private OCRReader _ocrDetect;
 		private Environment.SpecialFolder root;
@@ -96,9 +96,15 @@ namespace ElectricityMeterDetect.Test
 		private void btnOCR_Click(object sender, EventArgs e)
 		{
 			Image<Bgr, byte> tmpImage = imageCopy.Copy(detection);
-			ProcessImage(tmpImage.Convert<Gray, byte>());
-			pbPreview.Image = binarizedReading.ToBitmap();
+			ProcessImage(tmpImage);
 		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			var image = pbPreview.Image;
+			image.Save(Path.Combine(tbFolderPath.Text, Path.GetRandomFileName() + ".jpg"), ImageFormat.Jpeg);
+		}
+
 
 		#region Methods
 		static string GetAbsolutePath(string relativePath)
@@ -113,18 +119,19 @@ namespace ElectricityMeterDetect.Test
 			}
 		}
 
-		private void ProcessImage(Image<Gray, byte> image)
+		private void ProcessImage(Image<Bgr, byte> image)
 		{
+			Image<Bgr, byte> imageDetection;
 			Stopwatch watch = Stopwatch.StartNew(); // time the detection process
-			List<string> words = _ocrDetect.FindMeterReading(image, out binarizedReading);
+			List<string> words = _ocrDetect.FindMeterReading(image, out imageDetection);
 			watch.Stop(); //stop the timer
 			tbTime.Text = string.Format(watch.Elapsed.TotalMilliseconds.ToString()) + "ms";
 			for (int i = 0; i < words.Count; i++)
 			{
 				Debug.Print(string.Format("Meter Reading: {0}", words[i]));
 			}
+			pbPreview.Image = imageDetection.ToBitmap();
 		}
 		#endregion
-
 	}
 }
