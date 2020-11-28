@@ -4,6 +4,7 @@ using Emgu.CV.OCR;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Emgu.Util;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace ElectricityMeterDetect.Test
 	public class OCRReader : DisposableObject
 	{
 		private Tesseract ocr;
+		private const double CV_PI = 3.1415926535897932384626433832795;
 
 		public OCRReader(string dataPath)
 		{
@@ -71,26 +73,52 @@ namespace ElectricityMeterDetect.Test
 
 			VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
 			Mat hier = new Mat();
-			CvInvoke.FindContours(morph, contours, hier, RetrType.Ccomp, ChainApproxMethod.ChainApproxNone);
-			Dictionary<int, double> dict = new Dictionary<int, double>();
+			CvInvoke.FindContours(morph, contours, hier, RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
+			List<VectorOfPoint> selection = new List<VectorOfPoint>();
 			if (contours.Size > 0)
 			{
 				for (int i = 0; i < contours.Size; i++)
 				{
 					double area = CvInvoke.ContourArea(contours[i]);
-					if (area > 200 && area < 2000)
-						dict.Add(i, area);
+					if (area > 1000 && area < 10000)
+					{
+						selection.Add(contours[i]);
+					}
 				}
 			}
+			selection = RemoveIntersectionRect(selection);
 			imageDetection = image.Clone();
-			var nDict = dict.OrderBy(v => v.Value);
-			foreach (var item in nDict)
+			foreach (var item in selection)
 			{
-				int key = int.Parse(item.Key.ToString());
-				Rectangle rect = CvInvoke.BoundingRectangle(contours[key]);
+				Rectangle rect = CvInvoke.BoundingRectangle(item);
 				CvInvoke.Rectangle(imageDetection, rect, new MCvScalar(255, 0, 0), 2);
 			}
 			return morph;
+		}
+
+		private List<VectorOfPoint> RemoveIntersectionRect(List<VectorOfPoint> vectorOfPoints)
+		{
+			var result = new List<VectorOfPoint>();
+			var descending = vectorOfPoints.OrderByDescending(i => CvInvoke.ContourArea(i)).ToList();
+			var ascending = vectorOfPoints.OrderBy(i => CvInvoke.ContourArea(i)).ToList();
+			var willDelete = new List<VectorOfPoint>();
+			for (int i = 0; i < ascending.Count(); i++)
+			{
+				for (int j = 0; j < descending.Count(); j++)
+				{
+					Rectangle rect = CvInvoke.BoundingRectangle(descending[j]);
+					if (rect.Contains((ascending[i])[0]) && descending[j] != ascending[i])
+					{
+						willDelete.Add(ascending[i]);
+					}
+				}
+			}
+
+			foreach (var item in willDelete)
+			{
+				ascending.Remove(item);
+			}
+			return ascending;
 		}
 	}
 }

@@ -85,7 +85,8 @@ namespace ElectricityMeterDetect.Test
 			}
 			if (largestRect != -1)
 			{
-				image.Draw(meters[largestRect], new Bgr(Color.Red), 2);
+				//image.Draw(meters[largestRect], new Bgr(Color.Red), 2);
+				CvInvoke.Rectangle(image, meters[largestRect], new MCvScalar(255, 0, 0), 2);
 				detection = meters[largestRect];
 			}
 			pbPreview.Image = image.ToBitmap();
